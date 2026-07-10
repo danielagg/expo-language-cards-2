@@ -1,60 +1,122 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark, .dark *));
+@custom-variant light (&:is(.light, .light *));
 
+/* ═══════════════════════════════════════════
+   HACKER THEME — Dark Mode (default)
+   ═══════════════════════════════════════════ */
 :root {
   --radius: 1rem;
 
-  /* Dark-only theme — deep charcoal with purple undertone */
-  --background: oklch(0.14 0.02 280);
-  --foreground: oklch(0.96 0.01 280);
+  --background: oklch(0.08 0.01 145);
+  --foreground: oklch(0.92 0.025 135);
 
-  --card: oklch(0.18 0.025 280);
-  --card-foreground: oklch(0.96 0.01 280);
+  --card: oklch(0.11 0.012 145);
+  --card-foreground: oklch(0.92 0.025 135);
 
-  --popover: oklch(0.18 0.025 280);
-  --popover-foreground: oklch(0.96 0.01 280);
+  --popover: oklch(0.11 0.012 145);
+  --popover-foreground: oklch(0.92 0.025 135);
 
-  /* Neon magenta primary */
-  --primary: oklch(0.72 0.28 350);
-  --primary-foreground: oklch(0.1 0.02 350);
+  --primary: oklch(0.68 0.2 140);
+  --primary-foreground: oklch(0.08 0.01 145);
 
-  --secondary: oklch(0.25 0.03 280);
-  --secondary-foreground: oklch(0.94 0.01 280);
+  --secondary: oklch(0.17 0.015 145);
+  --secondary-foreground: oklch(0.88 0.02 135);
 
-  --muted: oklch(0.22 0.02 280);
-  --muted-foreground: oklch(0.62 0.03 280);
+  --muted: oklch(0.13 0.01 145);
+  --muted-foreground: oklch(0.45 0.05 130);
 
-  /* Cyan accent */
-  --accent: oklch(0.78 0.18 200);
-  --accent-foreground: oklch(0.12 0.02 200);
+  --accent: oklch(0.75 0.18 75);
+  --accent-foreground: oklch(0.1 0.02 75);
 
-  /* Red-pink destructive */
-  --destructive: oklch(0.65 0.25 10);
-  --destructive-foreground: oklch(0.97 0.01 10);
+  --destructive: oklch(0.6 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 25);
 
-  /* Lime success */
-  --success: oklch(0.78 0.21 130);
-  --success-foreground: oklch(0.12 0.02 130);
+  --success: oklch(0.68 0.2 140);
+  --success-foreground: oklch(0.08 0.01 145);
 
-  --border: oklch(0.28 0.02 280);
-  --input: oklch(0.26 0.02 280);
-  --ring: oklch(0.72 0.28 350);
+  --border: oklch(0.2 0.02 145);
+  --input: oklch(0.18 0.02 145);
+  --ring: oklch(0.68 0.2 140);
 
-  /* Chart colors */
-  --chart-1: oklch(0.72 0.28 350);
-  --chart-2: oklch(0.78 0.18 200);
-  --chart-3: oklch(0.82 0.22 60);
-  --chart-4: oklch(0.78 0.21 130);
+  --chart-1: oklch(0.68 0.2 140);
+  --chart-2: oklch(0.75 0.18 75);
+  --chart-3: oklch(0.72 0.16 190);
+  --chart-4: oklch(0.6 0.22 25);
 
-  /* Neon glows */
-  --glow-primary: 0 0 24px oklch(0.72 0.28 350 / 0.5);
-  --glow-accent: 0 0 24px oklch(0.78 0.18 200 / 0.5);
-  --glow-success: 0 0 24px oklch(0.78 0.21 130 / 0.5);
-  --glow-destructive: 0 0 24px oklch(0.65 0.25 10 / 0.5);
+  --glow-primary: 0 0 20px oklch(0.68 0.2 140 / 0.4), 0 0 60px oklch(0.68 0.2 140 / 0.1);
+  --glow-accent: 0 0 20px oklch(0.75 0.18 75 / 0.4), 0 0 60px oklch(0.75 0.18 75 / 0.1);
+  --glow-success: 0 0 20px oklch(0.68 0.2 140 / 0.4);
+  --glow-destructive: 0 0 20px oklch(0.6 0.22 25 / 0.4);
+
+  --scan-line: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 2px,
+    oklch(0.68 0.2 140 / 0.04) 2px,
+    oklch(0.68 0.2 140 / 0.04) 4px
+  );
+
+  --crt-vignette: radial-gradient(
+    ellipse 80% 70% at center,
+    transparent 40%,
+    oklch(0 0 0 / 0.35) 100%
+  );
 }
 
+/* ═══════════════════════════════════════════
+   LIGHT MODE
+   ═══════════════════════════════════════════ */
+.light {
+  --background: oklch(0.97 0.008 95);
+  --foreground: oklch(0.14 0.02 140);
+
+  --card: oklch(0.95 0.008 95);
+  --card-foreground: oklch(0.14 0.02 140);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.14 0.02 140);
+
+  --primary: oklch(0.5 0.18 140);
+  --primary-foreground: oklch(0.97 0.008 95);
+
+  --secondary: oklch(0.9 0.01 95);
+  --secondary-foreground: oklch(0.2 0.02 140);
+
+  --muted: oklch(0.92 0.008 95);
+  --muted-foreground: oklch(0.52 0.02 95);
+
+  --accent: oklch(0.62 0.18 70);
+  --accent-foreground: oklch(0.97 0.008 95);
+
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.97 0.008 95);
+
+  --success: oklch(0.5 0.18 140);
+  --success-foreground: oklch(0.97 0.008 95);
+
+  --border: oklch(0.85 0.01 95);
+  --input: oklch(0.88 0.01 95);
+  --ring: oklch(0.5 0.18 140);
+
+  --chart-1: oklch(0.5 0.18 140);
+  --chart-2: oklch(0.62 0.18 70);
+  --chart-3: oklch(0.55 0.16 190);
+  --chart-4: oklch(0.55 0.22 25);
+
+  --glow-primary: 0 0 12px oklch(0.5 0.18 140 / 0.25);
+  --glow-accent: 0 0 12px oklch(0.62 0.18 70 / 0.25);
+  --glow-success: 0 0 12px oklch(0.5 0.18 140 / 0.25);
+  --glow-destructive: 0 0 12px oklch(0.55 0.22 25 / 0.25);
+
+  --scan-line: none;
+  --crt-vignette: none;
+}
+
+/* ═══════════════════════════════════════════
+   THEME INLINE
+   ═══════════════════════════════════════════ */
 @theme inline {
   --radius-sm: calc(var(--radius) - 6px);
   --radius-md: calc(var(--radius) - 4px);
@@ -95,6 +157,10 @@
   --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
   --animate-slide-up: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   --animate-shake: shake 0.4s ease-in-out;
+  --animate-blink: blink 1s step-end infinite;
+  --animate-scan: scan 8s linear infinite;
+  --animate-flicker: flicker 0.15s infinite;
+  --animate-gradient: gradient-shift 8s ease infinite;
 }
 
 @keyframes float {
@@ -119,6 +185,32 @@
   75% { transform: translateX(8px); }
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.97; }
+  5% { opacity: 1; }
+  10% { opacity: 0.96; }
+  15% { opacity: 1; }
+  80% { opacity: 0.98; }
+  85% { opacity: 1; }
+  90% { opacity: 0.97; }
+  100% { opacity: 1; }
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 @layer base {
   * {
     border-color: var(--border);
@@ -127,6 +219,10 @@
   html {
     -webkit-text-size-adjust: 100%;
     color-scheme: dark;
+  }
+
+  html.light {
+    color-scheme: light;
   }
 
   body {
@@ -140,6 +236,11 @@
     overflow-x: hidden;
   }
 
+  .light body,
+  body:has(.light) {
+    background-color: var(--background);
+  }
+
   #root {
     min-height: 100vh;
     position: relative;
@@ -150,16 +251,15 @@
     color: var(--primary-foreground);
   }
 
-  /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
   }
   ::-webkit-scrollbar-track {
     background: var(--background);
   }
   ::-webkit-scrollbar-thumb {
-    background: var(--secondary);
-    border-radius: 5px;
+    background: var(--muted);
+    border-radius: 4px;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: var(--primary);
@@ -167,25 +267,58 @@
 }
 
 @layer components {
-  /* Ambient background orbs */
+  /* CRT scan-line overlay */
+  .crt::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    background: var(--scan-line);
+  }
+
+  /* CRT vignette overlay */
+  .crt-vignette::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    pointer-events: none;
+    background: var(--crt-vignette);
+  }
+
+  /* Ambient orbs */
   .orb {
     position: fixed;
     border-radius: 50%;
     filter: blur(100px);
     pointer-events: none;
     z-index: 0;
-    opacity: 0.18;
+    opacity: 0.15;
+  }
+
+  /* Terminal cursor */
+  .cursor-blink::after {
+    content: "_";
+    animation: blink 1s step-end infinite;
   }
 
   /* Neon text glow */
   .text-glow-primary {
-    text-shadow: 0 0 20px oklch(0.72 0.28 350 / 0.6);
+    text-shadow: 0 0 20px oklch(0.68 0.2 140 / 0.6);
   }
   .text-glow-accent {
-    text-shadow: 0 0 20px oklch(0.78 0.18 200 / 0.6);
+    text-shadow: 0 0 20px oklch(0.75 0.18 75 / 0.6);
   }
   .text-glow-success {
-    text-shadow: 0 0 20px oklch(0.78 0.21 130 / 0.6);
+    text-shadow: 0 0 20px oklch(0.68 0.2 140 / 0.6);
+  }
+
+  .light .text-glow-primary {
+    text-shadow: 0 0 12px oklch(0.5 0.18 140 / 0.4);
+  }
+  .light .text-glow-accent {
+    text-shadow: 0 0 12px oklch(0.62 0.18 70 / 0.4);
   }
 
   /* Neon border glow */
@@ -204,17 +337,21 @@
 
   /* Glassy card surface */
   .glass {
-    background: oklch(0.18 0.025 280 / 0.6);
+    background: color-mix(in oklch, var(--card) 70%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+  }
+
+  .light .glass {
+    background: color-mix(in oklch, var(--card) 80%, transparent);
   }
 
   /* Gradient text */
   .gradient-text {
     background: linear-gradient(
       135deg,
-      oklch(0.72 0.28 350),
-      oklch(0.78 0.18 200)
+      var(--primary),
+      var(--accent)
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -225,13 +362,54 @@
   .gradient-text-warm {
     background: linear-gradient(
       135deg,
-      oklch(0.82 0.22 60),
-      oklch(0.72 0.28 350)
+      var(--accent),
+      var(--primary)
     );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
     color: transparent;
+  }
+
+  /* Terminal border */
+  .terminal-border {
+    border: 1px solid var(--border);
+    box-shadow:
+      inset 0 0 30px oklch(0.68 0.2 140 / 0.03),
+      0 0 10px oklch(0.68 0.2 140 / 0.08);
+  }
+
+  /* Hacker separator */
+  .hacker-sep {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--primary),
+      transparent
+    );
+    opacity: 0.3;
+  }
+
+  /* Grid pattern overlay */
+  .bg-grid {
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-position: center center;
+  }
+
+  .light .bg-grid {
+    background-image:
+      linear-gradient(oklch(0.85 0.01 95 / 0.5) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.85 0.01 95 / 0.5) 1px, transparent 1px);
+  }
+
+  /* Animated gradient sweep */
+  .animate-gradient {
+    background-size: 200% auto;
+    animation: gradient-shift 8s ease infinite;
   }
 }
 

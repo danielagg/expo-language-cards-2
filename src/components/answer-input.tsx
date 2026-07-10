@@ -1,14 +1,14 @@
-import { useState, type FormEvent } from "react";
-import { Check, X, ArrowRight, CornerDownLeft } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useState, type FormEvent } from "react"
+import { Check, X, ArrowRight } from "lucide-react"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 
 interface AnswerInputProps {
-  status: "idle" | "correct" | "wrong";
-  expected: string;
-  onResult: (isCorrect: boolean, typed: string) => void;
-  onNext: () => void;
+  status: "idle" | "correct" | "wrong"
+  expected: string
+  onResult: (isCorrect: boolean, typed: string) => void
+  onNext: () => void
 }
 
 export function AnswerInput({
@@ -17,52 +17,60 @@ export function AnswerInput({
   onResult,
   onNext,
 }: AnswerInputProps) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState("")
 
   function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (status === "idle") {
-      if (!value.trim()) return;
-      const typed = value.trim();
-      const isCorrect =
-        typed.toLowerCase().replace(/\s+/g, " ").trim() ===
-        expected.toLowerCase().replace(/\s+/g, " ").trim();
-      onResult(isCorrect, typed);
-    } else {
-      handleNext();
-    }
+    e.preventDefault()
+    if (status !== "idle") return
+    if (!value.trim()) return
+    const typed = value.trim()
+    const isCorrect =
+      typed.toLowerCase().replace(/\s+/g, " ").trim() ===
+      expected.toLowerCase().replace(/\s+/g, " ").trim()
+    onResult(isCorrect, typed)
   }
 
   function handleNext() {
-    setValue("");
-    onNext();
+    setValue("")
+    onNext()
   }
 
-  const locked = status !== "idle";
+  const locked = status !== "idle"
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full max-w-2xl mx-auto space-y-3"
+      className="w-full max-w-xl mx-auto space-y-3"
     >
-      <div className="relative">
+      <div className="relative flex items-center">
+        <span
+          className={cn(
+            "absolute left-4 font-mono text-lg select-none pointer-events-none z-10",
+            status === "idle" && "text-primary",
+            status === "correct" && "text-success",
+            status === "wrong" && "text-destructive",
+          )}
+        >
+          $
+        </span>
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="type the translation…"
+          placeholder="type translation..."
           autoComplete="off"
           autoCorrect="off"
           spellCheck={false}
           disabled={locked}
           autoFocus
           className={cn(
-            "h-14 text-lg rounded-xl font-medium transition-all pr-10",
+            "h-14 text-lg rounded-xl font-mono font-medium transition-all pl-8 pr-12",
+            "bg-card border-2",
             status === "idle" &&
-              "focus-visible:border-primary focus-visible:glow-primary",
+              "border-input focus-visible:border-primary focus-visible:glow-primary",
             status === "correct" &&
-              "border-success bg-success/10 text-success glow-success",
+              "border-success bg-success/5 text-success glow-success",
             status === "wrong" &&
-              "border-destructive bg-destructive/10 text-destructive glow-destructive",
+              "border-destructive bg-destructive/5 text-destructive glow-destructive",
           )}
         />
         {status === "correct" && (
@@ -77,37 +85,34 @@ export function AnswerInput({
         <Button
           type="submit"
           size="lg"
-          className="w-full text-base"
+          className="w-full text-base font-mono"
           disabled={!value.trim()}
         >
-          Check it
-          <CornerDownLeft className="size-4" />
+          [check]
         </Button>
       )}
 
       {status !== "idle" && (
         <div className="space-y-2">
           {status === "wrong" && (
-            <p className="text-center text-sm text-muted-foreground">
-              the answer was{" "}
-              <span className="font-bold text-success text-glow-success">
+            <p className="text-center font-mono text-sm text-muted-foreground">
+              expected{" "}
+              <span className="text-success font-bold text-glow-success">
                 {expected}
               </span>
             </p>
           )}
-
           <Button
-            type="submit"
+            type="button"
             onClick={handleNext}
             size="lg"
             variant={status === "correct" ? "success" : "default"}
-            className="w-full text-base"
+            className="w-full text-base font-mono"
           >
-            Next word
-            <ArrowRight className="size-4" />
+            [next] <ArrowRight className="size-4" />
           </Button>
         </div>
       )}
     </form>
-  );
+  )
 }

@@ -22,50 +22,59 @@ export function LanguageCard({
   return (
     <div
       className={cn(
-        "relative aspect-[5/3] w-full max-w-2xl mx-auto rounded-3xl flex flex-col items-center justify-center gap-4 p-10 select-none transition-all duration-300",
-        "border-2 glass",
-        status === "idle" &&
-          "border-primary/40 glow-primary",
-        status === "correct" &&
-          "border-success glow-success",
-        status === "wrong" && "border-destructive glow-destructive animate-shake",
-        className
+        "relative w-full max-w-xl mx-auto rounded-2xl flex flex-col items-center justify-center gap-4 p-10 select-none transition-all duration-300",
+        "border terminal-border bg-card/80",
+        status === "idle" && "border-primary/40 glow-primary",
+        status === "correct" && "border-success/60 glow-success",
+        status === "wrong" && "border-destructive/60 glow-destructive animate-shake",
+        className,
       )}
     >
-      {/* Top row: language + mode */}
-      <div className="absolute top-4 left-5 right-5 flex items-center justify-between">
-        <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          {promptLang}
+      {/* Top bar — language + mode */}
+      <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-5 py-2 border-b border-border/40">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          {">"} {promptLang}
         </span>
-        <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-          {mode === "type" ? "type it" : "pick one"}
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+          {mode === "type" ? "[type]" : "[pick]"}
         </span>
       </div>
 
-      {/* The word — the hero */}
-      <div className="flex-1 flex items-center justify-center">
+      {/* Power LED */}
+      <span
+        className={cn(
+          "absolute top-2 right-3 size-1.5 rounded-full transition-colors",
+          status === "correct" && "bg-success shadow-[0_0_6px] shadow-success",
+          status === "wrong" && "bg-destructive shadow-[0_0_6px] shadow-destructive",
+          status === "idle" && "bg-primary shadow-[0_0_6px] shadow-primary",
+        )}
+      />
+
+      {/* The word */}
+      <div className="flex-1 flex items-center justify-center pt-6 pb-2">
         <p
           className={cn(
-            "text-7xl sm:text-8xl font-bold tracking-tight text-center break-words leading-none transition-all",
-            status === "idle" && "gradient-text-warm text-glow-primary",
+            "font-mono text-5xl sm:text-7xl font-bold tracking-tight text-center break-words leading-none transition-all",
+            status === "idle" && "text-foreground text-glow-primary",
             status === "correct" && "text-success text-glow-success",
-            status === "wrong" && "text-destructive"
+            status === "wrong" && "text-destructive",
           )}
         >
+          <span className="text-muted-foreground/40 select-none">$ </span>
           {prompt}
+          <span
+            className={cn(
+              "inline-block w-[3px] h-[1em] ml-0.5 align-middle animate-blink",
+              status === "idle" ? "bg-primary" : "bg-transparent",
+            )}
+          />
         </p>
       </div>
 
       {/* Bottom hint */}
-      <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-        → answer in {answerLang.toLowerCase()}
+      <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground pt-2 border-t border-border/40 w-full text-center">
+        → {answerLang.toLowerCase()}
       </p>
-
-      {/* Corner accents */}
-      <span className="absolute top-3 left-3 w-3 h-3 border-t-2 border-l-2 border-primary/50 rounded-tl-xl" />
-      <span className="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-primary/50 rounded-tr-xl" />
-      <span className="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-primary/50 rounded-bl-xl" />
-      <span className="absolute bottom-3 right-3 w-3 h-3 border-b-2 border-r-2 border-primary/50 rounded-br-xl" />
     </div>
   )
 }

@@ -1,16 +1,16 @@
-import { Check, X, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import type { WordPair } from "@/lib/types";
+import { Check, X, ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import type { WordPair } from "@/lib/types"
 
 interface AnswerMultiSelectProps {
-  options: WordPair[];
-  correctOption: WordPair;
-  answerSide: "dutch" | "english";
-  status: "idle" | "correct" | "wrong";
-  selectedIndex: number | null;
-  onSelect: (index: number) => void;
-  onNext: () => void;
+  options: WordPair[]
+  correctOption: WordPair
+  answerSide: "dutch" | "english"
+  status: "idle" | "correct" | "wrong"
+  selectedIndex: number | null
+  onSelect: (index: number) => void
+  onNext: () => void
 }
 
 export function AnswerMultiSelect({
@@ -22,19 +22,20 @@ export function AnswerMultiSelect({
   onSelect,
   onNext,
 }: AnswerMultiSelectProps) {
-  const locked = status !== "idle";
+  const locked = status !== "idle"
   const correctIndex = options.findIndex(
     (o) =>
       o.dutch === correctOption.dutch && o.english === correctOption.english,
-  );
+  )
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-2.5">
-      <div className="grid gap-2.5">
+    <div className="w-full max-w-xl mx-auto space-y-2.5">
+      <div className="grid gap-2">
         {options.map((opt, i) => {
-          const text = answerSide === "dutch" ? opt.dutch : opt.english;
-          const isCorrect = i === correctIndex;
-          const isPicked = i === selectedIndex;
+          const text = answerSide === "dutch" ? opt.dutch : opt.english
+          const isCorrect = i === correctIndex
+          const isPicked = i === selectedIndex
+          const label = String.fromCharCode(97 + i)
 
           return (
             <button
@@ -43,9 +44,10 @@ export function AnswerMultiSelect({
               disabled={locked}
               onClick={() => onSelect(i)}
               className={cn(
-                "group flex items-center justify-between rounded-xl border-2 px-5 py-3.5 text-left text-base font-semibold transition-all",
+                "group flex items-center gap-3 rounded-xl border px-4 py-3.5 text-left font-mono text-base font-medium transition-all",
+                "bg-card/80 terminal-border",
                 status === "idle" &&
-                  "border-border hover:border-primary/60 hover:bg-primary/5 hover:glow-primary cursor-pointer",
+                  "border-border hover:border-primary/50 hover:bg-primary/5 cursor-pointer",
                 status === "idle" &&
                   isPicked &&
                   "border-primary bg-primary/10 glow-primary",
@@ -56,18 +58,29 @@ export function AnswerMultiSelect({
                   isPicked &&
                   !isCorrect &&
                   "border-destructive bg-destructive/10 text-destructive glow-destructive",
-                status !== "idle" && !isCorrect && !isPicked && "opacity-40",
+                status !== "idle" && !isCorrect && !isPicked && "opacity-30",
               )}
             >
-              <span>{text}</span>
+              <span
+                className={cn(
+                  "inline-flex size-7 items-center justify-center rounded-lg text-xs font-bold shrink-0",
+                  "border border-current/20 bg-current/10",
+                  status === "idle" && "text-muted-foreground",
+                  status !== "idle" && isCorrect && "text-success",
+                  status !== "idle" && isPicked && !isCorrect && "text-destructive",
+                )}
+              >
+                {label}
+              </span>
+              <span className="flex-1">{text}</span>
               {status !== "idle" && isCorrect && (
-                <Check className="size-5 text-success" />
+                <Check className="size-5 shrink-0 text-success" />
               )}
               {status !== "idle" && isPicked && !isCorrect && (
-                <X className="size-5 text-destructive" />
+                <X className="size-5 shrink-0 text-destructive" />
               )}
             </button>
-          );
+          )
         })}
       </div>
 
@@ -77,12 +90,11 @@ export function AnswerMultiSelect({
           onClick={onNext}
           size="lg"
           variant={status === "correct" ? "success" : "default"}
-          className="mt-6 w-full text-base"
+          className="mt-4 w-full text-base font-mono"
         >
-          Next word
-          <ArrowRight className="size-4" />
+          [next] <ArrowRight className="size-4" />
         </Button>
       )}
     </div>
-  );
+  )
 }

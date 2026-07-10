@@ -1,6 +1,6 @@
 import { useMemo } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { Trash2, Home, Target, Flame, Layers, Trophy } from "lucide-react"
+import { Trash2, Target, Flame, Layers, Trophy, ArrowRight } from "lucide-react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useScores } from "@/lib/scores"
@@ -56,31 +56,32 @@ function StatCard({
   accent: "primary" | "accent" | "success"
 }) {
   const accentColor = {
-    primary: "text-primary",
-    accent: "text-accent",
-    success: "text-success",
+    primary: "text-primary border-primary/30",
+    accent: "text-accent border-accent/30",
+    success: "text-success border-success/30",
   }[accent]
 
   return (
-    <Card className="py-5 glass">
+    <Card className={cn("py-5 border-l-2", accentColor, "bg-card/80")}>
       <div className="px-5 flex items-center gap-4">
         <div
           className={cn(
-            "inline-flex size-12 items-center justify-center rounded-2xl bg-secondary/60 shrink-0",
-            accentColor
+            "inline-flex size-12 items-center justify-center rounded-xl border shrink-0",
+            accentColor,
+            "bg-current/5",
           )}
         >
           {icon}
         </div>
         <div className="min-w-0">
-          <p className="font-mono font-bold text-3xl leading-none tracking-tight">
+          <p className="font-mono font-bold text-3xl leading-none tracking-tight tabular-nums">
             {value}
           </p>
-          <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mt-1.5">
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-1.5">
             {label}
           </p>
           {hint && (
-            <p className="font-mono text-[10px] text-muted-foreground mt-0.5">
+            <p className="font-mono text-[9px] text-muted-foreground/60 mt-0.5">
               {hint}
             </p>
           )}
@@ -92,17 +93,17 @@ function StatCard({
 
 function WordRow({ r }: { r: RankedWord }) {
   return (
-    <div className="flex items-center justify-between gap-3 py-2.5 border-b border-border/50 last:border-0">
-      <div className="min-w-0">
-        <p className="font-semibold truncate">
-          {r.word.dutch}{" "}
-          <span className="text-muted-foreground font-normal">
+    <div className="flex items-center justify-between gap-3 py-2 border-b border-border/30 last:border-0">
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-sm truncate">
+          {r.word.dutch}
+          <span className="text-muted-foreground font-normal ml-1.5">
             — {r.word.english}
           </span>
         </p>
       </div>
-      <div className="flex items-center gap-2.5 shrink-0">
-        <span className="font-mono text-xs text-muted-foreground tabular-nums">
+      <div className="flex items-center gap-2 shrink-0">
+        <span className="font-mono text-[10px] text-muted-foreground tabular-nums">
           {r.correct}/{r.total}
         </span>
         <div className="w-16 h-1.5 rounded-full bg-muted overflow-hidden">
@@ -112,20 +113,20 @@ function WordRow({ r }: { r: RankedWord }) {
               r.accuracy >= 0.8
                 ? "bg-success"
                 : r.accuracy >= 0.5
-                  ? "bg-chart-3"
-                  : "bg-destructive"
+                  ? "bg-accent"
+                  : "bg-destructive",
             )}
             style={{ width: `${r.accuracy * 100}%` }}
           />
         </div>
         <span
           className={cn(
-            "font-mono text-xs font-bold tabular-nums w-9 text-right",
+            "font-mono text-[11px] font-bold tabular-nums w-8 text-right",
             r.accuracy >= 0.8
               ? "text-success"
               : r.accuracy >= 0.5
-                ? "text-chart-3"
-                : "text-destructive"
+                ? "text-accent"
+                : "text-destructive",
           )}
         >
           {Math.round(r.accuracy * 100)}%
@@ -147,23 +148,27 @@ function StatsPage() {
 
   if (session.attempted === 0 && seen === 0) {
     return (
-      <div className="text-center space-y-6 py-16 animate-slide-up">
-        <div className="inline-flex size-20 items-center justify-center rounded-3xl bg-secondary/60 text-muted-foreground">
+      <div className="text-center space-y-6 py-16 animate-slide-up max-w-lg mx-auto">
+        <div className="inline-flex size-20 items-center justify-center rounded-2xl border border-border/40 bg-card/60 text-muted-foreground">
           <Layers className="size-8" />
         </div>
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold">No stats yet</h1>
-          <p className="text-muted-foreground">
-            Play a few rounds and your glow-ups will show up here.
+          <h1 className="text-3xl font-bold font-mono">
+            <span className="text-muted-foreground">// </span>NO DATA
+          </h1>
+          <p className="font-mono text-sm text-muted-foreground">
+            Play a few rounds first. Stats auto-generate.
           </p>
         </div>
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-3">
           <Link to="/game">
-            <Button className="glow-primary">Start playing</Button>
+            <Button className="font-mono">
+              [play] <ArrowRight className="size-4" />
+            </Button>
           </Link>
           <Link to="/">
-            <Button variant="ghost" className="font-mono text-xs uppercase tracking-wider">
-              Home
+            <Button variant="ghost" className="font-mono text-xs">
+              [home]
             </Button>
           </Link>
         </div>
@@ -172,31 +177,34 @@ function StatsPage() {
   }
 
   return (
-    <div className="w-full space-y-8 animate-slide-up">
+    <div className="w-full max-w-3xl mx-auto space-y-6 animate-slide-up">
+      {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Your <span className="gradient-text">stats</span>
+          <h1 className="text-2xl font-bold tracking-tight font-mono">
+            <span className="text-muted-foreground">// </span>
+            <span className="gradient-text">STATS</span>
           </h1>
-          <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mt-1">
-            saved locally in this browser
+          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/60 mt-1">
+            local session data
           </p>
         </div>
         <Button
           variant="outline"
           size="sm"
           onClick={resetAll}
-          className="font-mono text-xs uppercase tracking-wider"
+          className="font-mono text-xs"
         >
-          <Trash2 className="size-4" />
-          Reset
+          <Trash2 className="size-3.5" />
+          reset
         </Button>
       </div>
 
+      {/* HUD row */}
       <div className="grid gap-3 sm:grid-cols-3">
         <StatCard
           icon={<Target className="size-5" />}
-          label="session accuracy"
+          label="accuracy"
           value={`${overallAccuracy}%`}
           hint={`${session.correct}/${session.attempted} correct`}
           accent="accent"
@@ -209,46 +217,51 @@ function StatsPage() {
         />
         <StatCard
           icon={<Trophy className="size-5" />}
-          label="words seen"
+          label="seen"
           value={`${seen}/${TOTAL_WORDS}`}
-          hint={unseen > 0 ? `${unseen} still to discover` : "all seen!"}
+          hint={unseen > 0 ? `${unseen} remaining` : "database complete"}
           accent="success"
         />
       </div>
 
+      {/* Word rankings */}
       <div className="grid gap-4 md:grid-cols-2">
-        <Card className="py-5 glass">
+        <Card className="py-5 border-l-2 border-destructive/30 bg-card/80">
           <div className="px-5">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-1">
               <span className="size-2 rounded-full bg-destructive" />
-              <h2 className="font-mono text-xs uppercase tracking-widest font-bold">
-                Needs work
+              <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold">
+                needs work
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="font-mono text-[9px] text-muted-foreground/60 mb-3">
               lowest accuracy, worst first
             </p>
             {worst.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4">nothing here yet.</p>
+              <p className="font-mono text-xs text-muted-foreground py-4">
+                nothing here yet.
+              </p>
             ) : (
               worst.map((r) => <WordRow key={r.key} r={r} />)
             )}
           </div>
         </Card>
 
-        <Card className="py-5 glass">
+        <Card className="py-5 border-l-2 border-success/30 bg-card/80">
           <div className="px-5">
-            <div className="flex items-center gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-1">
               <span className="size-2 rounded-full bg-success" />
-              <h2 className="font-mono text-xs uppercase tracking-widest font-bold">
-                Mastered
+              <h2 className="font-mono text-[10px] uppercase tracking-[0.2em] font-bold">
+                mastered
               </h2>
             </div>
-            <p className="text-xs text-muted-foreground mb-3">
+            <p className="font-mono text-[9px] text-muted-foreground/60 mb-3">
               highest accuracy, best first
             </p>
             {best.length === 0 ? (
-              <p className="text-sm text-muted-foreground py-4">nothing here yet.</p>
+              <p className="font-mono text-xs text-muted-foreground py-4">
+                nothing here yet.
+              </p>
             ) : (
               best.map((r) => <WordRow key={r.key} r={r} />)
             )}
@@ -258,9 +271,8 @@ function StatsPage() {
 
       <div className="flex justify-center pt-1">
         <Link to="/game">
-          <Button variant="ghost" size="sm" className="font-mono text-xs uppercase tracking-wider">
-            <Home className="size-4" />
-            Keep playing
+          <Button variant="ghost" size="sm" className="font-mono text-xs">
+            [play more]
           </Button>
         </Link>
       </div>
